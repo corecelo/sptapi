@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const ip = require("ip");
 const dbTokenId = require("../../config/keys").dbTokenId;
 
 // Loading the module TokenId
@@ -11,6 +12,7 @@ const TokenId = require("../../model/tokenid");
 // Access - Public
 router.post("/", (req, res) => {
   TokenId.findById(dbTokenId).then(token => {
+    req.body.EndUserIp = ip.address();
     req.body.TokenId = token.tokenId;
     axios
       .post(
