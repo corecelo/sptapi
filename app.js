@@ -6,6 +6,7 @@ const TokenId = require("./model/tokenid");
 const axios = require("axios");
 const dbTokenId = require("./config/keys").dbTokenId;
 
+// Loading All Routes
 const tokenIdRoute = require("./routes/api/tokenId");
 const searchRoute = require("./routes/api/search");
 
@@ -15,21 +16,27 @@ const app = express();
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
+// MongoDb Mlab Login Link (Not Required in production)
 const db = require("./config/keys").mongoURI;
 
+// Loading the connection of mongoose with mongo db
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("mongoDB Connected"))
   .catch(err => console.log(err));
 
+// Cron Job for getting TokenId of agency
 cron.schedule("*/60 * * * *", () => {
+  // Finding the available TokenId from the database
   TokenId.findById(dbTokenId).then(token => {
+    // Authenticating Agegency (Secret value)
     const auth = {
       ClientId: "ApiIntegrationNew",
       UserName: "Save",
       Password: "Save@1234",
       EndUserIp: "192.168.0.100"
     };
+    // Makeing the request for getting TokenId
     axios
       .post(
         "http://api.tektravels.com/SharedServices/SharedData.svc/rest/Authenticate",
@@ -38,15 +45,20 @@ cron.schedule("*/60 * * * *", () => {
       .then(response => {
         const newtoken = response.data.TokenId;
         token.tokenId = newtoken;
+        // Saving the response to database again
         token.save().then(response => console.log(response));
       })
       .catch(err => console.log(err.response.data));
   });
 });
 
+// Getting the roites ready
+// **Route For Developer only**
 app.use("/api/tokenid", tokenIdRoute);
 app.use("/api/search", searchRoute);
 
+// Setting the port
 const port = process.env.PORT || 5000;
 
+// Firing the  Srever
 app.listen(port, () => console.log(`Server is running on port ${port}`));
