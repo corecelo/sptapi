@@ -26,7 +26,7 @@ mongoose
   .catch(err => console.log(err));
 
 // Cron Job for getting TokenId of agency
-cron.schedule("*/60 * * * *", () => {
+cron.schedule("*/1 * * * *", () => {
   // Finding the available TokenId from the database
   TokenId.findById(dbTokenId).then(token => {
     // Authenticating Agegency (Secret value)
