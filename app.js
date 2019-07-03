@@ -25,10 +25,11 @@ app.use(bodyparser.json());
 
 // MongoDb Mlab Login Link (Not Required in production)
 const db = require("./config/keys").mongoURI;
+const dbDEV = require("./config/keys").mongoDEVURI;
 
 // Loading the connection of mongoose with mongo db
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(dbDEV, { useNewUrlParser: true })
   .then(() => console.log("mongoDB Connected"))
   .catch(err => console.log(err));
 
