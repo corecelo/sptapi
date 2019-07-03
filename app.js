@@ -7,6 +7,8 @@ const axios = require("axios");
 const ip = require("ip");
 const cors = require("cors");
 const dbTokenId = require("./config/keys").dbTokenId;
+// Token Id for Main Db
+const dbTokenIdDEV = require("../../config/keys").dbTokenIdDEV;
 
 const userIp = ip.address();
 
@@ -36,7 +38,7 @@ mongoose
 // Cron Job for getting TokenId of agency
 cron.schedule("*/120 * * * *", () => {
   // Finding the available TokenId from the database
-  TokenId.findById(dbTokenId).then(token => {
+  TokenId.findById(dbTokenIdDEV).then(token => {
     // Authenticating Agegency (Secret value)
     const auth = {
       ClientId: "ApiIntegrationNew",
