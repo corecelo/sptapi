@@ -66,7 +66,7 @@ cron.schedule("*/120 * * * *", () => {
 // Type Of Request - get
 // Access - Public
 // Discription - Test Route
-app.get((req, res) => {
+app.get("/", (req, res) => {
   res.json({
     message: "Working Route With HTTPS, Project Will Get Compeleted Soon"
   });
