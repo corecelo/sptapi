@@ -8,7 +8,7 @@ const ip = require("ip");
 const cors = require("cors");
 const dbTokenId = require("./config/keys").dbTokenId;
 // Token Id for Main Db
-const dbTokenIdDEV = require("../../config/keys").dbTokenIdDEV;
+const dbTokenIdDEV = require("./config/keys").dbTokenIdDEV;
 
 const userIp = ip.address();
 
