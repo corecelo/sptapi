@@ -26,7 +26,10 @@ router.post("/", (req, res) => {
         console.log("Request Ended");
         res.json(response.data);
       })
-      .catch(err => console.log(res.status(404).json(err.response.data)));
+      .catch(err => {
+        console.log(err.response.data);
+        res.status(404).json(err.response.data);
+      });
   });
 });
 
