@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
   TokenId.findById(dbTokenIdDEV).then(token => {
     req.body.EndUserIp = ip.address();
     req.body.TokenId = token.tokenId;
-    console.log(token);
+    console.log(req.body);
     axios
       .post(
         "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search",
