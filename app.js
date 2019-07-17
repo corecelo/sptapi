@@ -40,7 +40,6 @@ cron.schedule("*/1 * * * *", () => {
   // Finding the available TokenId from the database
   TokenId.findById(dbTokenIdDEV)
     .then(token => {
-      console.log(token);
       // Authenticating Agegency (Secret value)
       const auth = {
         ClientId: "ApiIntegrationNew",
@@ -56,6 +55,7 @@ cron.schedule("*/1 * * * *", () => {
         )
         .then(response => {
           const newtoken = response.data.TokenId;
+          console.log(newtoken);
           token.tokenId = newtoken;
           // Saving the response to database again
           token.save().then(response => console.log(response));
