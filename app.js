@@ -55,7 +55,6 @@ cron.schedule("*/1 * * * *", () => {
         )
         .then(response => {
           const newtoken = response.data.TokenId;
-          console.log(newtoken);
           token.tokenId = newtoken;
           // Saving the response to database again
           token.save().then(response => console.log(response));
