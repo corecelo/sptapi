@@ -16,17 +16,17 @@ router.post("/", (req, res) => {
   TokenId.findById(dbTokenIdDEV).then(token => {
     req.body.EndUserIp = ip.address();
     req.body.TokenId = token.tokenId;
-    console.log('Request Started');
+    console.log("Request Started");
     axios
       .post(
         "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search",
         req.body
       )
       .then(response => {
-        console.log('Request Ended');
-        res.json(response.data)
+        console.log("Request Ended");
+        res.json(response.data);
       })
-      .catch(err => res.status(404).json(err.response.data));
+      .catch(err => console.log(res.status(404).json(err.response.data)));
   });
 });
 
