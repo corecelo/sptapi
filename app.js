@@ -36,7 +36,7 @@ mongoose
   .catch(err => console.log(err));
 
 // Cron Job for getting TokenId of agency
-cron.schedule("*/120 * * * *", () => {
+cron.schedule("*/1 * * * *", () => {
   // Finding the available TokenId from the database
   TokenId.findById(dbTokenIdDEV)
     .then(token => {
