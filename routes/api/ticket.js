@@ -7,7 +7,7 @@ const dbTokenId = require("../../config/keys").dbTokenId;
 // Loading the module TokenId
 const TokenId = require("../../model/tokenid");
 
-// API Endpoinnt - api/search
+// API Endpoinnt - api/ticket
 // Type Of Request - POST
 // Access - Public
 router.post("/", (req, res) => {
@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
     console.log(req.body);
     axios
       .post(
-        "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Search",
+        "http://api.tektravels.com/BookingEngineService_Air/AirService.svc/rest/Ticket",
         req.body
       )
       .then(response => {

@@ -7,14 +7,18 @@ const axios = require("axios");
 const ip = require("ip");
 const cors = require("cors");
 const dbTokenId = require("./config/keys").dbTokenId;
-// Token Id for Main Db
-const dbTokenIdDEV = require("./config/keys").dbTokenIdDEV;
 
 const userIp = ip.address();
 
 // Loading All Routes
 const tokenIdRoute = require("./routes/api/tokenId");
 const searchRoute = require("./routes/api/search");
+const farerulesRoute = require("./routes/api/farerules");
+const farequoteRoute = require("./routes/api/farequote");
+const ssrRoute = require("./routes/api/ssr");
+const bookRoute = require("./routes/api/book");
+const ticketRoute = require("./routes/api/ticket");
+const getbookingdetailsRoute = require("./routes/api/getbookingdetails");
 
 const app = express();
 
@@ -30,14 +34,14 @@ const db = require("./config/keys").mongoURI;
 
 // Loading the connection of mongoose with mongo db
 mongoose
-  .connect(dbDEV, { useNewUrlParser: true })
+  .connect(db, { useNewUrlParser: true })
   .then(() => console.log("mongoDB Connected"))
   .catch(err => console.log(err));
 
 // Cron Job for getting TokenId of agency
 cron.schedule("*/120 * * * *", () => {
   // Finding the available TokenId from the database
-  TokenId.findById(dbTokenIdDEV)
+  TokenId.findById(dbTokenId)
     .then(token => {
       // Authenticating Agegency (Secret value)
       const auth = {
@@ -77,6 +81,12 @@ app.get("/", (req, res) => {
 // **Route For Developer only**
 app.use("/api/tokenid", tokenIdRoute);
 app.use("/api/search", searchRoute);
+app.use("/api/farerules", farerulesRoute);
+app.use("/api/farequote", farequoteRoute);
+app.use("/api/ssr", ssrRoute);
+app.use("/api/book", bookRoute);
+app.use("/api/ticket", ticketRoute);
+app.use("/api/getbookingdetails", getbookingdetailsRoute);
 
 // Setting the port
 const port = process.env.PORT || 5000;
